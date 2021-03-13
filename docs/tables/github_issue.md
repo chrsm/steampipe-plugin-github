@@ -1,8 +1,8 @@
-# Table: github_repository_issue
+# Table: github_issue
 
 Github Issues are used to track ideas, enhancements, tasks, or bugs for work on GitHub.  Note that Pull Requests are ALSO issues in Github.
 
-The `github_repository_issue` table can be used to query issues belonging to a repository, and **you must specify which repository** with `where repository_full_name='owner/repository'`.   
+The `github_issue` table can be used to query issues belonging to a repository, and **you must specify which repository** with `where repository_full_name='owner/repository'`.   
 
 
 ## Examples
@@ -15,7 +15,7 @@ select
   title,
   state
 from
-  github_repository_issue
+  github_issue
 where
   repository_full_name = 'turbot/steampipe'
   and not is_pull_request;
@@ -31,7 +31,7 @@ select
   state,
   pull_request_links ->> 'html_url' as pr_link
 from
-  github_repository_issue
+  github_issue
 where
   repository_full_name = 'turbot/steampipe'
   and is_pull_request;
@@ -47,7 +47,7 @@ select
   state,
   assignees
 from
-  github_repository_issue
+  github_issue
 where
   repository_full_name = 'turbot/steampipe'
   and jsonb_array_length(assignees) = 0
@@ -66,7 +66,7 @@ select
   state,
   tags
 from
-  github_repository_issue
+  github_issue
 where
   repository_full_name = 'turbot/steampipe'
   and state = 'open'
@@ -84,7 +84,7 @@ select
   state,
   a ->> 'login' as assigned_to
 from
-  github_repository_issue,
+  github_issue,
   jsonb_array_elements(assignees) as a
 where
   repository_full_name = 'turbot/steampipe'
@@ -100,7 +100,7 @@ select
   author ->> 'login' as author,
   count(*) as num_issues
 from
-  github_repository_issue
+  github_issue
 where
   repository_full_name = 'turbot/steampipe'
 group by
@@ -110,7 +110,19 @@ order by
 ```
 
 
-
-
-
+### Join with github_repository to find open issues in multiple repos
+```sql
+select
+  i.repository_full_name,
+  i.issue_number,
+  i.title
+from
+  github_repository as r,
+  github_issue as i
+where 
+  not i.is_pull_request 
+  and r.full_name like 'turbot/steampip%'
+  and i.state = 'open'
+  and i.repository_full_name = r.full_name;
+```
 

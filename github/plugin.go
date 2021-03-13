@@ -17,13 +17,16 @@ func Plugin(context.Context) *plugin.Plugin {
 		},
 		DefaultTransform: transform.FromGo(),
 		TableMap: map[string]*plugin.Table{
-			"github_gist":             tableGitHubGist(),
-			"github_license":          tableGitHubLicense(),
-			"github_organization":     tableGitHubOrganization(),
-			"github_repository":       tableGitHubRepository(),
-			"github_repository_issue": tableGitHubRepositoryIssue(),
-			"github_team":             tableGitHubTeam(),
-			"github_user":             tableGitHubUser(),
+			"github_gist":            tableGitHubGist(),
+			"github_license":         tableGitHubLicense(),
+			"github_issue":           tableGitHubIssue(),
+			"github_my_gist":         tableGitHubMyGist(),
+			"github_my_issue":        tableGitHubMyIssue(),
+			"github_my_organization": tableGitHubMyOrganization(),
+			"github_organization":    tableGitHubOrganization(),
+			"github_repository":      tableGitHubRepository(),
+			"github_team":            tableGitHubTeam(),
+			"github_user":            tableGitHubUser(),
 		},
 	}
 	return p
