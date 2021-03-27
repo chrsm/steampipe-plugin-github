@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/turbot/steampipe-plugin-github/github"
+	"github.com/chrsm/steampipe-plugin-gitlab/gitlab"
 	"github.com/turbot/steampipe-plugin-sdk/plugin"
 )
 
 func main() {
-	plugin.Serve(&plugin.ServeOpts{PluginFunc: github.Plugin})
+	plugin.Serve(&plugin.ServeOpts{PluginFunc: gitlab.Plugin})
 }

@@ -1,11 +1,11 @@
-package github
+package gitlab
 
 import (
 	"github.com/turbot/steampipe-plugin-sdk/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/plugin/schema"
 )
 
-type githubConfig struct {
+type gitlabConfig struct {
 	Token *string `cty:"token"`
 }
 
@@ -16,14 +16,15 @@ var ConfigSchema = map[string]*schema.Attribute{
 }
 
 func ConfigInstance() interface{} {
-	return &githubConfig{}
+	return &gitlabConfig{}
 }
 
 // GetConfig :: retrieve and cast connection config from query data
-func GetConfig(connection *plugin.Connection) githubConfig {
+func GetConfig(connection *plugin.Connection) gitlabConfig {
 	if connection == nil || connection.Config == nil {
-		return githubConfig{}
+		return gitlabConfig{}
 	}
-	config, _ := connection.Config.(githubConfig)
+
+	config, _ := connection.Config.(gitlabConfig)
 	return config
 }
